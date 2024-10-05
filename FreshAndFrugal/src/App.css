@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  background-color: aquamarine;
 }
 
 .logo {
@@ -11,12 +12,12 @@
   will-change: filter;
   transition: filter 300ms;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+/* .logo:hover {
+  filter: drop-shadow(0 0 2em #23232baa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+  filter: drop-shadow(0 0 2em #c8cfd2aa);
+} */
 
 @keyframes logo-spin {
   from {
@@ -27,14 +28,16 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
+} */
 
 .card {
   padding: 2em;
+  color: #fd23ce;
+  background-color: rgb(181, 201, 195);
 }
 
 .read-the-docs {

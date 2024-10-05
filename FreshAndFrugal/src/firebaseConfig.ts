@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { CollectionReference, DocumentData, Firestore, Query, addDoc, collection, connectFirestoreEmulator, doc, getDoc, 
   getDocs, getFirestore, onSnapshot, query, 
-  where} from "firebase/firestore";
+  where, DocumentReference} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -109,3 +109,39 @@ async function queryDocuments(collectionRef: Query<unknown, DocumentData>, condi
 
 
 }
+
+// Function to read all pantry items for a user
+async function getUserPantry(db: Firestore, userId: string) {
+    try {
+      // Step 1: Get the user document
+      const userDocRef = doc(db, "users", userId);
+      const userDocSnap = await getDoc(userDocRef);
+  
+      if (userDocSnap.exists()) {
+        // Step 2: Get the pantry reference field from the user document
+        const pantryRef = userDocSnap.data().pantry as DocumentReference;
+  
+        if (pantryRef) {
+          // Step 3: Get all food items from the pantry collection referenced by the pantryRef
+          const pantrySnapshot = await getDocs(collection(db, pantryRef.path)); // Fetch all docs in the referenced pantry collection
+  
+          // Step 4: Process each food item and return the data
+          const pantryItems = pantrySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+  
+          console.log("Pantry Items: ", pantryItems);
+          return pantryItems; // Return the array of pantry items
+        } else {
+          console.log("No pantry reference found for the user.");
+          return [];
+        }
+      } else {
+        console.log("No such user document!");
+        return [];
+      }
+    } catch (error) {
+      console.error("Error reading user's pantry: ", error);
+    }
+  }

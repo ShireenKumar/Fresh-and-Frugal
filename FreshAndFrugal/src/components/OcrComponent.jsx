@@ -39,7 +39,7 @@ export default function OcrComponent() {
       <button onClick={runOCR}>Extract Text</button>
 
       {progress > 0 && <p>Progress: {progress}%</p>}
-      {text && <p>Extracted Text: {text}</p>}
+      {text && <p>Extracted Text: {text.split('\n').map((line, index) => <span key={index}>{line}<br/></span>)}</p>}
       {image && <img src={image} alt="Uploaded" style={{ maxWidth: "400px" }} />}
     </div>
   );
