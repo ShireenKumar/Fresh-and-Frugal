@@ -1,12 +1,17 @@
 import * as React from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from "./routes"
+import {NavigationMenuDemo}  from "./components/Navbar.tsx";
 
 interface App {
 
 }
 const App: React.FunctionComponent<App> = (props) =>{
-    return <RouterProvider router = {router}/>
+    return (
+        <div>
+        <RouterProvider router={router} />
+      </div>
+    )
 }
 
 export default App;

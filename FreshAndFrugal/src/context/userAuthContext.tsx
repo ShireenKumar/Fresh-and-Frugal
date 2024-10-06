@@ -20,7 +20,7 @@ const logIn = (email: string, password: string) => {
 };
 
 const signUp = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password)
 };
 
 const logOut = () => {

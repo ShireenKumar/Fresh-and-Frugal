@@ -88,7 +88,7 @@ const Signup: React.FunctionComponent<ISignupProps> = (props) =>{
                     <Input
                       id="email"
                       type="email"
-                      placeholder="dipesh@example.com"
+                      placeholder="username@example.com"
                       value={userInfo.email}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setUserInfo({ ...userInfo, email: e.target.value })
