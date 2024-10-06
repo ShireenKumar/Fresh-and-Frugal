@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { CollectionReference, DocumentData, Firestore, Query, addDoc, collection, connectFirestoreEmulator, doc, getDoc, 
   getDocs, getFirestore, onSnapshot, query, 
-  where, DocumentReference} from "firebase/firestore";
+  where, DocumentReference, enableIndexedDbPersistence} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,9 +22,21 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const enablePersistence = () => enableIndexedDbPersistence(db)
+  .catch((err) => {
+    if (err.code === 'failed-precondition') {
+      console.log("Multiple tabs open. Persistence can only be enabled in one tab at a time.");
+    } else if (err.code === 'unimplemented') {
+      console.log("Persistence is not available in this browser.");
+    }
+  });
+
+export { db, enablePersistence};
+
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);
-export const db = getFirestore(app);
 
 // Creating an instance of FireStore and Accessing Data
 const firestore = getFirestore(); // initializes firestore with default settings
