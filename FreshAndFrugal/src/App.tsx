@@ -1,16 +1,15 @@
 import * as React from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from "./routes"
-import {NavigationMenuDemo}  from "./components/Navbar.tsx";
+import { UserAuthProvider } from './context/userAuthContext.tsx';
 
 interface App {
 
 }
 const App: React.FunctionComponent<App> = (props) =>{
     return (
-        <div>
-        <RouterProvider router={router} />
-      </div>
+        <UserAuthProvider><RouterProvider router={router} /></UserAuthProvider>
+
     )
 }
 

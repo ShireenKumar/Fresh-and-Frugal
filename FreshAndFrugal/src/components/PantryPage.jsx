@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getFirestore } from "firebase/firestore";
 import { getUserPantry } from './firebaseConfig.ts';
 
-const PantryPage = ({ userId }) => {
+const PantryPage = ({  }) => {
     const [pantryItems, setPantryItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ const PantryPage = ({ userId }) => {
     useEffect(() => {
       const fetchPantryItems = async () => {
         try {
-          const items = await getUserPantry(db, userId);
+          const items = await getUserPantry(db, 'bj9mMmlwXyU2fCLDVxInYjdWMEQ2');
           setPantryItems(items);
         } catch (err) {
           setError("Error fetching pantry items");
@@ -23,7 +23,7 @@ const PantryPage = ({ userId }) => {
       };
   
       fetchPantryItems();
-    }, [userId, db]); // Run this effect when userId changes
+    }, ['bj9mMmlwXyU2fCLDVxInYjdWMEQ2', db]); // Run this effect when userId changes
   
     if (loading) {
       return <div>Loading...</div>;
@@ -35,7 +35,7 @@ const PantryPage = ({ userId }) => {
   
     return (
       <div>
-        <h1>Your Pantry</h1>
+        <h3>View the full list of your ingredients here: </h3>
         {pantryItems.length > 0 ? (
           <ul>
             {pantryItems.map(item => (

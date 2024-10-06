@@ -12,7 +12,7 @@ import { Label } from '@radix-ui/react-label';
 import { Input } from '@/components/ui/input';
 import { UserSignIn } from '@/types';
 import { Icons } from '@/components/ui/icons';
-import { userUserAuth } from '@/context/userAuthContext';
+import { useUserAuth } from '@/context/userAuthContext';
 import { Link, useNavigate } from "react-router-dom";
 
 const initialValue: UserSignIn= {
@@ -27,7 +27,7 @@ interface ISignupProps {
  
 
 const Signup: React.FunctionComponent<ISignupProps> = (props) =>{
-    const {googleSignIn, signUp} = userUserAuth();
+    const {googleSignIn, signUp} = useUserAuth();
     const navigate  = useNavigate();
     const [userInfo, setUserInfo] = React.useState<UserSignIn>(initialValue)
  const handleGoogleSignIn = async(e: React.MouseEvent<HTMLElement>) => {
@@ -47,7 +47,7 @@ const Signup: React.FunctionComponent<ISignupProps> = (props) =>{
         await signUp(userInfo.email, userInfo.password)
         navigate("/")
     }catch(error){
-        console.log("Error");
+        console.log(error);
     }
  };
 
@@ -143,5 +143,3 @@ const Signup: React.FunctionComponent<ISignupProps> = (props) =>{
 }
 
 export default Signup;
-
-
