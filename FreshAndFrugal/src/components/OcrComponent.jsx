@@ -64,16 +64,37 @@ export default function OcrComponent() {
   // Function to add matched ingredients to Firestore
   const addMatchedIngredients = async (matchedIngredients) => {
     try {
-      const ingredientsCollection = collection(db, "UserPantry"); // Change to your desired collection
+      const ingredientsCollection = collection(db, "User/Pantry"); // Change to your desired collection
       const newDocRef = await addDoc(ingredientsCollection, {
         matchedIngredients,
-        timestamp: new Date(), // Add timestamp for record-keeping
+        timestamp: calculateExpirationDate(matchedIngredients.time, matchedIngredients.metric), // Add timestamp for record-keeping
       });
 
       console.log("Matched ingredients added to Firestore at: ", newDocRef.path);
     } catch (error) {
       console.error("Error adding matched ingredients to Firestore: ", error);
     }
+  };
+
+  const calculateExpirationDate = (time, metric) => {
+    const now = new Date();
+    let expirationDate;
+
+    switch (metric) {
+      case "days":
+        expirationDate = new Date(now.setDate(now.getDate() + time));
+        break;
+      case "months":
+        expirationDate = new Date(now.setMonth(now.getMonth() + time));
+        break;
+      case "years":
+        expirationDate = new Date(now.setFullYear(now.getFullYear() + time));
+        break;
+      default:
+        expirationDate = now; // Default to now if no metric is provided
+    }
+
+    return expirationDate;
   };
 
   return (
